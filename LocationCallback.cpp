@@ -31,6 +31,7 @@ STDMETHODIMP CLocationEvents::OnLocationChanged(__RPC__in REFIID reportType, __R
             if (SUCCEEDED(spLatLongReport->GetTimestamp(&systemTime))) {
                 if (TRUE == SystemTimeToFileTime(&systemTime, (FILETIME *) &currentTime)) {
                     diffTime = (currentTime > m_previousTime) ? (currentTime - m_previousTime) : 0;
+                    if(m_previousTime == 0) diffTime = 0;
                 }
                 m_previousTime = currentTime;
             }
