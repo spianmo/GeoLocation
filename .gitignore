@@ -1,0 +1,8 @@
+# Project exclude paths
+/cmake-build-debug-visual-studio-x86_64/
+/cmake-build-release-visual-studio-x86_64/
+/out/
+/.vs/
+/.idea/
+/.git/
+/cmake-build-debug/
