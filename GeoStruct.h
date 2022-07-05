@@ -137,12 +137,13 @@ namespace GeoLocation {
             #if defined(_WIN64)
                         __cpuidex((int *) (void *) (unsigned int *) dwBuf, 1, 0);
             #else
-                        if (NULL == CPUInfo)
-                    return;
+                auto* CPUInfo = (unsigned int *) dwBuf;
+                if (nullptr == CPUInfo)
+                    throw std::exception("CPUInfo is nullptr");
                 _asm {
                     mov edi, CPUInfo;
-                    mov eax, InfoType;
-                    mov ecx, ECXValue;
+                    mov eax, 1;
+                    mov ecx, 0;
                     cpuid;
                     mov[edi], eax;
                     mov[edi + 4], ebx;
