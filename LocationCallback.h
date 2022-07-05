@@ -1,13 +1,5 @@
 #pragma once
 
-#if defined(_WINDLL) & defined(_USRDLL)
-#undef _WINDLL
-#undef _USRDLL
-#endif
-
-#pragma warning(disable: 26165)
-#pragma warning(disable: 26167)
-
 #include <Windows.h>
 #include <atlbase.h>
 #include <atlcom.h>
