@@ -1,7 +1,5 @@
 #include "GeoCoordinateWatcher.h"
 
-#include <utility>
-
 IID REPORT_TYPES[] = { IID_ILatLongReport };
 GeoCoordinateWatcher* GeoCoordinateWatcher::_instance;
 

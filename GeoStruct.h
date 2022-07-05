@@ -1,7 +1,6 @@
 #pragma once
 
 #include "json.hpp"
-#include "util.h"
 
 #include <optional>
 #include <stdexcept>
@@ -109,6 +108,7 @@ namespace GeoLocation {
             j["latitude"] = this->getLatitude();
             j["longitude"] = this->getLongitude();
             j["speed"] = this->getSpeed();
+            j["intervals"] = this->getIntervals();
             j["timestamp"] = this->getTimestamp();
             j["vertical_accuracy"] = this->getVerticalAccuracy();
             return j;
@@ -123,9 +123,39 @@ namespace GeoLocation {
         virtual ~GeoCoordinate() = default;
 
     private:
-        std::string cpuid = get_cpuId();
+        std::string cpuid = getCpuId();
         Info info;
         std::string softwareVer = "V1.0.0";
+
+        std::string getCpuId() {
+            char pCpuId[32] = "";
+            int dwBuf[4];
+            #if defined(__GNUC__)
+                        __cpuid(InfoType, CPUInfo[0], CPUInfo[1], CPUInfo[2], CPUInfo[3]);
+            #elif defined(_MSC_VER)
+            #if defined(_MSC_VER)
+            #if defined(_WIN64)
+                        __cpuidex((int *) (void *) (unsigned int *) dwBuf, 1, 0);
+            #else
+                        if (NULL == CPUInfo)
+                    return;
+                _asm {
+                    mov edi, CPUInfo;
+                    mov eax, InfoType;
+                    mov ecx, ECXValue;
+                    cpuid;
+                    mov[edi], eax;
+                    mov[edi + 4], ebx;
+                    mov[edi + 8], ecx;
+                    mov[edi + 12], edx;
+                }
+            #endif
+            #endif
+            #endif
+            sprintf(pCpuId, "%08X", dwBuf[3]);
+            sprintf(pCpuId + 8, "%08X", dwBuf[0]);
+            return pCpuId;
+        }
 
     public:
         [[nodiscard]] const std::string &getCpuid() const { return cpuid; }

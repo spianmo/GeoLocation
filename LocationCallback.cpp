@@ -1,7 +1,5 @@
 #include "LocationCallback.h"
-#include "GeoStruct.h"
 #include "GeoCoordinateWatcher.h"
-
 
 const double kKnotsToMetresPerSecondConversionFactor = 463.0 / 900.0;
 
@@ -12,6 +10,14 @@ void ConvertKnotsToMetresPerSecond(double *knots) {
 static int64_t GetUnixTime() {
     int64_t times = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     return times;
+}
+
+std::string formatTimeStamp(int64_t timestamp) {
+    time_t t = timestamp;
+    struct tm *tm = localtime(&t);
+    char buf[64];
+    strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", tm);
+    return buf;
 }
 
 STDMETHODIMP CLocationEvents::OnLocationChanged(__RPC__in REFIID reportType, __RPC__in_opt ILocationReport *pLocationReport) {

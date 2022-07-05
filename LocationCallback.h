@@ -17,7 +17,6 @@
 #include <ctime>
 #include <chrono>
 #include "GeoStruct.h"
-#include "util.h"
 #pragma comment( lib, "propsys.lib" )
 #pragma comment( lib, "locationapi.lib")
 

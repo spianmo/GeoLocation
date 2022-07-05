@@ -16,4 +16,4 @@ ADD_DEFINITIONS(-D_ATL_ATTRIBUTES -D_WINDLL -D_USRDLL)
 
 SET(OS_LIBS ${ATL_LIBS})
 
-add_executable(GeoLocation main.cpp GeoCoordinateWatcher.cpp GeoCoordinateWatcher.h LocationCallback.cpp LocationCallback.h GeoStruct.h json.hpp util.h util.cpp)
+add_executable(GeoLocation main.cpp GeoCoordinateWatcher.cpp GeoCoordinateWatcher.h LocationCallback.cpp LocationCallback.h GeoStruct.h json.hpp)
