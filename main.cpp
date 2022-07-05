@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char *argv[]) {
     system("chcp 65001");
     GeoCoordinateWatcher *watcher = GeoCoordinateWatcher::GetInstance();
     watcher->onPositionChange(true, [](const GeoCoordinate &location) -> void {

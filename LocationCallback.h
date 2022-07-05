@@ -29,7 +29,8 @@ class CLocationEvents :
 {
 public:
     CLocationEvents() : m_previousTime(0) {}
-    virtual ~CLocationEvents() {}
+
+    virtual ~CLocationEvents() = default;
 
     DECLARE_NOT_AGGREGATABLE(CLocationEvents)
 
@@ -42,5 +43,6 @@ public:
 
 private:
 
-    ULONGLONG m_previousTime;
+    int64_t m_previousTime;
+
 };

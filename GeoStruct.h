@@ -35,65 +35,72 @@ namespace GeoLocation {
         double latitude = 0.0;
         double longitude = 0.0;
         double speed = 0.0;
-        __int64 timestamp = 0;
+        int64_t intervals = 0;
+        int64_t timestamp = 0;
         double verticalAccuracy = 0.0;
 
     public:
-        const double &getAltitude() const { return altitude; }
+        [[nodiscard]] const double &getAltitude() const { return altitude; }
 
         double &getMutableAltitude() { return altitude; }
 
         void setAltitude(const double &value) { this->altitude = value; }
 
-        const double &getCourse() const { return course; }
+        [[nodiscard]] const double &getCourse() const { return course; }
 
         double &getMutableCourse() { return course; }
 
         void setCourse(const double &value) { this->course = value; }
 
-        const std::string &getFormatTimestamp() const { return formatTimestamp; }
+        [[nodiscard]] const std::string &getFormatTimestamp() const { return formatTimestamp; }
 
         std::string &getMutableFormatTimestamp() { return formatTimestamp; }
 
         void setFormatTimestamp(const std::string &value) { this->formatTimestamp = value; }
 
-        const double &getHorizontalAccuracy() const { return horizontalAccuracy; }
+        [[nodiscard]] const double &getHorizontalAccuracy() const { return horizontalAccuracy; }
 
         double &getMutableHorizontalAccuracy() { return horizontalAccuracy; }
 
         void setHorizontalAccuracy(const double &value) { this->horizontalAccuracy = value; }
 
-        const double &getLatitude() const { return latitude; }
+        [[nodiscard]] const double &getLatitude() const { return latitude; }
 
         double &getMutableLatitude() { return latitude; }
 
         void setLatitude(const double &value) { this->latitude = value; }
 
-        const double &getLongitude() const { return longitude; }
+        [[nodiscard]] const double &getLongitude() const { return longitude; }
 
         double &getMutableLongitude() { return longitude; }
 
         void setLongitude(const double &value) { this->longitude = value; }
 
-        const double &getSpeed() const { return speed; }
+        [[nodiscard]] const double &getSpeed() const { return speed; }
 
         double &getMutableSpeed() { return speed; }
 
         void setSpeed(const double &value) { this->speed = value; }
 
-        const __int64 &getTimestamp() const { return timestamp; }
+        [[nodiscard]] const int64_t &getIntervals() const { return intervals; }
 
-        __int64 &getMutableTimestamp() { return timestamp; }
+        int64_t &getMutableIntervals() { return intervals; }
 
-        void setTimestamp(const __int64 &value) { this->timestamp = value; }
+        void setIntervals(const int64_t &value) { this->intervals = value; }
 
-        const double &getVerticalAccuracy() const { return verticalAccuracy; }
+        [[nodiscard]] const int64_t &getTimestamp() const { return timestamp; }
+
+        int64_t &getMutableTimestamp() { return timestamp; }
+
+        void setTimestamp(const int64_t &value) { this->timestamp = value; }
+
+        [[nodiscard]] const double &getVerticalAccuracy() const { return verticalAccuracy; }
 
         double &getMutableVerticalAccuracy() { return verticalAccuracy; }
 
         void setVerticalAccuracy(const double &value) { this->verticalAccuracy = value; }
 
-        json toJsonObject() const {
+        [[nodiscard]] json toJsonObject() const {
             json j = json::object();
             j["altitude"] = this->getAltitude();
             j["course"] = this->getCourse();
@@ -121,25 +128,25 @@ namespace GeoLocation {
         std::string softwareVer = "V1.0.0";
 
     public:
-        const std::string &getCpuid() const { return cpuid; }
+        [[nodiscard]] const std::string &getCpuid() const { return cpuid; }
 
         std::string &getMutableCpuid() { return cpuid; }
 
         void setCpuid(const std::string &value) { this->cpuid = value; }
 
-        const Info &getInfo() const { return info; }
+        [[nodiscard]] const Info &getInfo() const { return info; }
 
         Info &getMutableInfo() { return info; }
 
         void setInfo(const Info &value) { this->info = value; }
 
-        const std::string &getSoftwareVer() const { return softwareVer; }
+        [[nodiscard]] const std::string &getSoftwareVer() const { return softwareVer; }
 
         std::string &getMutableSoftwareVer() { return softwareVer; }
 
         void setSoftwareVer(const std::string &value) { this->softwareVer = value; }
 
-        std::string toJson() const {
+        [[nodiscard]] std::string toJson() const {
             json j = json::object();
             j["cpuid"] = this->getCpuid();
             j["info"] = this->getInfo().toJsonObject();

@@ -11,7 +11,6 @@ GeoCoordinateWatcher::GeoCoordinateWatcher()
     hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED | COINIT_DISABLE_OLE1DDE);;
     if (SUCCEEDED(hr))
     {
-        IID REPORT_TYPES[] = { IID_ILatLongReport };
         hr = spLocation.CoCreateInstance(CLSID_Location);
     }
 }

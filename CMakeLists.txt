@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(GeoLocation)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # some atl settings
 SET(CMAKE_CXX_WARNING_LEVEL "4" CACHE STRING "Warning level" FORCE)
