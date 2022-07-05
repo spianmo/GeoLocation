@@ -127,7 +127,7 @@ namespace GeoLocation {
         Info info;
         std::string softwareVer = "V1.0.0";
 
-        std::string getCpuId() {
+        static std::string getCpuId() {
             char pCpuId[32] = "";
             int dwBuf[4];
             #if defined(__GNUC__)
