@@ -1,6 +1,6 @@
 # GeoLocation
 >
-> 使用C++ ATL COM在Windows平台上的实时GPS坐标位置获取，支持位置监听，与dotNet的System.Device.Location实现方式相同
+> 使用C++ ATL COM在Windows平台上实时获取GPS坐标位置，支持位置监听，与dotNet的System.Device.Location实现方式相同
 >
 > Use C++ ATL COM to obtain real-time GPS coordinates on the Windows platform, support location monitoring, and implement the same method as dotNet's System.Device.Location
 
