@@ -58,8 +58,7 @@ STDMETHODIMP CLocationEvents::OnLocationChanged(__RPC__in REFIID reportType, __R
                 PropVariantToDouble(speed, &_speed);
                 ConvertKnotsToMetresPerSecond(&_speed);
             }
-            GeoCoordinate geoCoordinate;
-            Info info;
+            GeoCoordinate info;
             info.setLatitude(latitude);
             info.setLongitude(longitude);
             info.setAltitude(altitude);
@@ -70,9 +69,8 @@ STDMETHODIMP CLocationEvents::OnLocationChanged(__RPC__in REFIID reportType, __R
             info.setIntervals(diffTime);
             info.setTimestamp(GetUnixTime());
             info.setFormatTimestamp(formatTimeStamp(time(nullptr)));
-            geoCoordinate.setInfo(info);
             GeoCoordinateWatcher *watcher = GeoCoordinateWatcher::GetInstance();
-            watcher->callback(geoCoordinate);
+            watcher->callback(info);
         }
     }
     return S_OK;
