@@ -20,11 +20,11 @@ namespace GeoLocation {
         return get_untyped(j, property.data());
     }
 
-    class GeoCoordinate {
+    class Info {
     public:
-        GeoCoordinate() = default;
+        Info() = default;
 
-        virtual ~GeoCoordinate() = default;
+        virtual ~Info() = default;
 
     private:
         double altitude = 0.0;
@@ -114,9 +114,75 @@ namespace GeoLocation {
             return j;
         }
 
-        [[nodiscard]] std::string toJson() const {
-            return this->toJsonObject().dump(4);
+    };
+
+    class GeoCoordinate {
+    public:
+        GeoCoordinate() = default;
+
+        virtual ~GeoCoordinate() = default;
+
+    private:
+        std::string cpuid = getCpuId();
+        Info info;
+        std::string softwareVer = "V1.0.0";
+
+        static std::string getCpuId() {
+            char pCpuId[32] = "";
+            int dwBuf[4];
+            #if defined(__GNUC__)
+                        __cpuid(InfoType, CPUInfo[0], CPUInfo[1], CPUInfo[2], CPUInfo[3]);
+            #elif defined(_MSC_VER)
+            #if defined(_MSC_VER)
+            #if defined(_WIN64)
+                        __cpuidex((int *) (void *) (unsigned int *) dwBuf, 1, 0);
+            #else
+                auto* CPUInfo = (unsigned int *) dwBuf;
+                if (nullptr == CPUInfo)
+                    throw std::exception("CPUInfo is nullptr");
+                _asm {
+                    mov edi, CPUInfo;
+                    mov eax, 1;
+                    mov ecx, 0;
+                    cpuid;
+                    mov[edi], eax;
+                    mov[edi + 4], ebx;
+                    mov[edi + 8], ecx;
+                    mov[edi + 12], edx;
+                }
+            #endif
+            #endif
+            #endif
+            sprintf(pCpuId, "%08X", dwBuf[3]);
+            sprintf(pCpuId + 8, "%08X", dwBuf[0]);
+            return pCpuId;
         }
 
+    public:
+        [[nodiscard]] const std::string &getCpuid() const { return cpuid; }
+
+        std::string &getMutableCpuid() { return cpuid; }
+
+        void setCpuid(const std::string &value) { this->cpuid = value; }
+
+        [[nodiscard]] const Info &getInfo() const { return info; }
+
+        Info &getMutableInfo() { return info; }
+
+        void setInfo(const Info &value) { this->info = value; }
+
+        [[nodiscard]] const std::string &getSoftwareVer() const { return softwareVer; }
+
+        std::string &getMutableSoftwareVer() { return softwareVer; }
+
+        void setSoftwareVer(const std::string &value) { this->softwareVer = value; }
+
+        [[nodiscard]] std::string toJson() const {
+            json j = json::object();
+            j["cpuid"] = this->getCpuid();
+            j["info"] = this->getInfo().toJsonObject();
+            j["software_ver"] = this->getSoftwareVer();
+            return j.dump(4);
+        }
     };
 }
