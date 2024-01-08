@@ -80,3 +80,7 @@ I can give a sample code in C#, which is similar in C++
 ```
 
 It is worth mentioning that this library is the core implementation of GPS positioning in the current C# core library. The implementation of the Geolocation function in chromium79 is also similar. Currently, there is no other good way to obtain positioning on Windows except using ATL COM to interact with the position sensor to obtain the position.
+
+As @Cancy126 mentioned, whether to turn on the positioning switch of Windows will affect whether the positioning function can be used normally. However, there is a problem. Whether to use AGPS has nothing to do with turning on the positioning switch. AGPS is also automatically selected by the system after the Windows positioning switch is turned on. Yes, AGPS will be used when the GPS signal is poor (please refer to Microsoft official documentation[[Location API - Win32 apps | Microsoft Learn](https://learn.microsoft.com/en-us/windows/win32/locationapi/windows-location-api-portal)] on this).
+
+Similarly, if the Windows location switch is not turned on, you can actually obtain the approximate geographical location through IP. This part needs to be coded by yourself.
