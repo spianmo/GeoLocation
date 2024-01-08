@@ -41,3 +41,42 @@ int64_t timestamp = 0;
 double verticalAccuracy = 0.0;
 ```
 
+**About "Access denied to reports" Problem**
+
+["Access denied to reports" · Issue #5 · spianmo/GeoLocation (github.com)](https://github.com/spianmo/GeoLocation/issues/5)
+
+Because your windows does not have the positioning switch turned on, or your application is not allowed to perform GPS positioning, you can force the Windows positioning switch to be turned on by adding a registry. You can complete the addition of the registry in MFC, but please note that UAC permissions are required.
+
+```bat
+REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Privacy\LetAppsAccessLocation\ /f /v Value /t REG_DWORD /d 0 >nul
+```
+
+Location logs including Windows systems can also be cleared through the registry.
+
+```bat
+REG DELETE HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\NonPackaged /f >nul
+```
+
+A normal business logic for using GPS positioning on Windows is: first determine whether the system contains a GPS sensor. If the current computer does not contain a GPS sensor, it will prompt that the device does not support GPS positioning. Then determine whether the positioning switch of Windows is turned on. If it is not turned on, it will prompt first. First enable GPS permissions or actively increase UAC and then enable the system's positioning function by modifying the registry.
+
+I can give a sample code in C#, which is similar in C++
+
+```c#
+    public static void PassLocationPermission()
+    {
+        RegistryKey localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32);
+        RegistryKey LetAppsAccessLocation = localKey.OpenSubKey(@"SOFTWARE\Microsoft\PolicyManager\default\Privacy\LetAppsAccessLocation", true);
+        LetAppsAccessLocation.SetValue("Value", "1", RegistryValueKind.DWord);
+        LetAppsAccessLocation.Close();
+    }
+
+    public static void ClearLocationRecord()
+    {
+        RegistryKey LocationRecord = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\", true);
+        LocationRecord.DeleteSubKeyTree("NonPackaged", false);
+        LocationRecord.Close();
+
+    }
+```
+
+It is worth mentioning that this library is the core implementation of GPS positioning in the current C# core library. The implementation of the Geolocation function in chromium79 is also similar. Currently, there is no other good way to obtain positioning on Windows except using ATL COM to interact with the position sensor to obtain the position.
